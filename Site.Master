@@ -1,0 +1,87 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeBehind="Site.master.vb" Inherits="Grader_ASP.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <!--стили-->
+    <style type="text/css">
+        /*CSS переменные*/
+        :root {
+            --blue: #1565C0;
+            --light-gray: #F5F5F5;
+            --gray: #BDBDBD;           
+        }
+
+        /*классы и идентификаторы*/
+        h2 , h4 {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        input {
+            margin-bottom: 10px;
+            border: 1px solid var(--blue);                
+        }
+        .button {
+            border: 2px solid var(--blue);
+            background: white;
+            color: var(--blue);
+        }
+        body {
+            width: 100%;
+            margin: 0; /* Убираем отступы */
+            background-color: var(--light-gray);
+            font-family: Calibri Light, Calibri, Arial, sans-serif;
+            font-size: 12pt;
+            text-align: left;
+        }
+       .header_div {
+           width: 100%;
+           background-color: var(--blue);
+           color: white;
+           text-align: center;
+           font-size: 24pt;
+           font-weight: bold;
+       }
+       .content_div {
+           width: 100%;
+           overflow: hidden;
+       }
+       .left_div {
+           width: 20%;
+           float:left;
+           text-align: left;
+       }
+       .right_div {          
+           height: 100vh;
+           width: calc(80% - 1px);
+           float: left;
+           background-color: white;
+           border-left: 1px solid var(--blue);
+       }
+       .line_div {
+           text-align: left;
+           padding: 10px;
+       }
+       .tableOfResults {
+           overflow-y: scroll;
+           height: 350px;
+           background-color: var(--gray);
+       }
+
+   </style> 
+</head>
+<body>
+    <form id="form1" method="post" enctype="multipart/form-data" runat="server">        
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

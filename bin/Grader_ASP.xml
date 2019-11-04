@@ -1,0 +1,140 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Grader_ASP
+</name>
+</assembly>
+<members>
+<member name="T:Grader_ASP.My.MyWebExtension">
+ <summary>
+ Модуль, используемый для определения свойств, доступных в My Namespace для веб-проектов.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:Grader_ASP.My.MyWebExtension.Computer">
+ <summary>
+ Возвращает информацию о главном компьютере.
+ </summary>
+</member>
+<member name="P:Grader_ASP.My.MyWebExtension.User">
+ <summary>
+ Возвращает сведения о текущем веб-пользователе.
+ </summary>
+</member>
+<member name="P:Grader_ASP.My.MyWebExtension.Request">
+ <summary>
+ Возвращает объект Request.
+ </summary>
+</member>
+<member name="P:Grader_ASP.My.MyWebExtension.Response">
+ <summary>
+ Возвращает объект Response.
+ </summary>
+</member>
+<member name="P:Grader_ASP.My.MyWebExtension.Log">
+ <summary>
+ Возвращает объект журнала ASP.
+ </summary>
+</member>
+<member name="F:Grader_ASP.ErrorWebForm._form1">
+<summary>
+form1 элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._locationOfStandardAssembly">
+<summary>
+locationOfStandardAssembly элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._locationOfCheckedAssembly">
+<summary>
+locationOfCheckedAssembly элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._SubmitToServer">
+<summary>
+SubmitToServer элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._tableOfResults">
+<summary>
+tableOfResults элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._lblCountOfRows">
+<summary>
+lblCountOfRows элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._btnExportTable">
+<summary>
+btnExportTable элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._btnClearTable">
+<summary>
+btnClearTable элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.Site._head">
+<summary>
+head элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.Site._form1">
+<summary>
+form1 элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.Site._ContentPlaceHolder1">
+<summary>
+ContentPlaceHolder1 элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+</members>
+</doc>

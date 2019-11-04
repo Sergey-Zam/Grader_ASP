@@ -1,0 +1,11 @@
+[{"id":"A1","name":"Автор","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A2","name":"Имя документа","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A3","name":"Название сборки","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A4","name":"Материал","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A5","name":"Дата создания фаила","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A6","name":"Дата изменения фаила","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A7","name":"Количество деталей в сборке","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A8","name":"Все детали сборки закреплены (0 степеней свободы)","weight":"1","tolerance":"0","value":"empty"},
+{"id":"A9","name":"Масса сборки","weight":"1","tolerance":"9.9","value":"empty"},
+{"id":"A10","name":"Площадь сборки","weight":"1","tolerance":"9.9","value":"empty"},
+{"id":"A11","name":"Объем сборки","weight":"1","tolerance":"9.9","value":"empty"}]
