@@ -4,16 +4,11 @@ Imports System.Web.Script.Serialization
 Imports Inventor
 Imports Newtonsoft.Json
 
-Public Class MainWebForm
+Public Class PartsWebForm
     Inherits System.Web.UI.Page
 
     '0. загрузка страницы
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        ' Страница доступна в первый раз.
-        'If Not IsPostBack Then
-        'MsgBox("Внимание! При продолжении работы, программа попытается найти и запустить Inventor, этот процесс может занять несколько минут")
-        'End If
-
         'найти текущий сеанс Inventor (если Inventor не запущен - запустить)
         Try
             'пытаемся получить ссылку на запущенный Inventor
@@ -44,7 +39,7 @@ Public Class MainWebForm
         End If
 
         If lblCountOfRows.Text = "0" Or _finalMessageString = "" Then
-            MsgBox("Сначала необходимо получить данные из сборок")
+            MsgBox("Сначала необходимо получить данные из деталей")
             Exit Sub
         End If
 
@@ -88,13 +83,13 @@ Public Class MainWebForm
         tableOfResults.InnerHtml = "" 'очистка таблицы
     End Sub
 
-    'функция по нажатию кнопки (переход на другую страницу: сравнить детали) 
-    Protected Sub btnToPartsWebForm_Click(sender As Object, e As EventArgs) Handles btnToPartsWebForm.Click
+    'функция по нажатию кнопки (переход на другую страницу: сравнить сборки)
+    Protected Sub btnToMainWebForm_Click(sender As Object, e As EventArgs) Handles btnToMainWebForm.Click
         If _blocked = True Then
             Exit Sub
         End If
 
-        Server.Transfer("PartsWebForm.aspx") 'переход на страницу
+        Server.Transfer("MainWebForm.aspx") 'переход на страницу
     End Sub
 
     'функция по нажатию кнопки загрузить файлы на сервер
@@ -108,7 +103,7 @@ Public Class MainWebForm
         _stndDocumentSaveLocation = ""
         _chekDocumentSaveLocation = ""
 
-        '1. загрузить файл эталонной сборки на сервер
+        '1. загрузить файл эталонной детали на сервер
         If Not locationOfStandardDocument.PostedFile Is Nothing And locationOfStandardDocument.PostedFile.ContentLength > 0 Then
             Dim fn As String = System.IO.Path.GetFileName(locationOfStandardDocument.PostedFile.FileName)
             _stndDocumentSaveLocation = Server.MapPath("Data") & "\" & fn
@@ -121,11 +116,11 @@ Public Class MainWebForm
             End Try
         Else
             _blocked = False
-            MsgBox("Не выбран файл эталонной сборки для загрузки")
+            MsgBox("Не выбран файл эталонной детали для загрузки")
             Exit Sub
         End If
 
-        '2. загрузить файл проверяемой сборки на сервер
+        '2. загрузить файл проверяемой детали на сервер
         If Not locationOfCheckedDocument.PostedFile Is Nothing And locationOfCheckedDocument.PostedFile.ContentLength > 0 Then
             Dim fn As String = System.IO.Path.GetFileName(locationOfCheckedDocument.PostedFile.FileName)
             _chekDocumentSaveLocation = Server.MapPath("Data") & "\" & fn
@@ -138,30 +133,25 @@ Public Class MainWebForm
             End Try
         Else
             _blocked = False
-            MsgBox("Не выбран файл проверяемой сборки для загрузки")
+            MsgBox("Не выбран файл проверяемой детали для загрузки")
             Exit Sub
         End If
 
         'продолжить работу, только если оба пути к файлам заполнены
         If _stndDocumentSaveLocation IsNot "" And _chekDocumentSaveLocation IsNot "" Then
             '3. очистка 4х листов для хранения данных всех сравниваемых документов
+            'для деталей, далее, фактически будут использоваться только 2 листа (..PartAndDrawCriteria), а остальные оставться пустыми
             _listOfStndAsmCriteria.Clear()
             _listOfStndPartAndDrawCriteria.Clear()
             _listOfChekAsmCriteria.Clear()
             _listOfChekPartAndDrawCriteria.Clear()
 
             '4. работа с эталонной сборкой (и всеми входящими в нее документами)
-            WorkWithAsm(_listOfStndAsmCriteria, _listOfStndPartAndDrawCriteria, _stndDocumentSaveLocation)
+            WorkWithPart(_listOfStndAsmCriteria, _listOfStndPartAndDrawCriteria, _stndDocumentSaveLocation)
 
             '5. работа с проверяемой сборкой (и всеми входящими в нее документами)
-            WorkWithAsm(_listOfChekAsmCriteria, _listOfChekPartAndDrawCriteria, _chekDocumentSaveLocation)
+            WorkWithPart(_listOfChekAsmCriteria, _listOfChekPartAndDrawCriteria, _chekDocumentSaveLocation)
 
-            'проверка: длины листов эталонная_сборка и проверяемая_сборка должны быть равны, иначе работа прекращается
-            If Not _listOfStndAsmCriteria.Count = _listOfChekAsmCriteria.Count Then
-                _blocked = False
-                MsgBox("Ошибка. Количество сборок не совпадает, сравнение не может быть проведено.")
-                Exit Sub
-            End If
             'проверка: длины листов эталонные_детали и проверяемые_детали должны быть равны, иначе работа прекращается
             If Not _listOfStndPartAndDrawCriteria.Count = _listOfChekPartAndDrawCriteria.Count Then
                 _blocked = False
@@ -169,10 +159,8 @@ Public Class MainWebForm
                 Exit Sub
             End If
 
-            '6. сравнение полученных четырех списков
+            '6. сравнение полученных списков
             _listOfResults.Clear() 'сначала необходимо очистить список результатов
-            'сначала идет работа со сборками
-            compare(_listOfStndAsmCriteria, _listOfChekAsmCriteria)
             'потом идет работа с деталями
             compare(_listOfStndPartAndDrawCriteria, _listOfChekPartAndDrawCriteria)
 
@@ -182,14 +170,10 @@ Public Class MainWebForm
             '8. вывод текстовых результатов
             finalMessage()
 
-            '9. сохранение данных из списков в 4 json файла (записать в json, сериализация)
+            '9. сохранение данных из списков в 2 json файла (записать в json, сериализация)
             Dim ser As New JavaScriptSerializer()
-            Dim results As String = ser.Serialize(_listOfStndAsmCriteria)
-            System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "StandardAssembly.json", results)
-            results = ser.Serialize(_listOfStndPartAndDrawCriteria)
+            Dim results As String = ser.Serialize(_listOfStndPartAndDrawCriteria)
             System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "StandardPart.json", results)
-            results = ser.Serialize(_listOfChekAsmCriteria)
-            System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "CheckedAssembly.json", results)
             results = ser.Serialize(_listOfChekPartAndDrawCriteria)
             System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "CheckedPart.json", results)
         End If
@@ -197,44 +181,30 @@ Public Class MainWebForm
         _blocked = False
     End Sub
 
-    'работа со сборкой
-    Private Sub WorkWithAsm(ByVal listOfAsmCriteria As List(Of Criteria), ByVal listOfPartAndDrawCriteria As List(Of Criteria), ByVal assemblySaveLocation As String)
-        '1. открыть документ сборки
-        Dim asmDoc As AssemblyDocument
+    'работа с деталью
+    Private Sub WorkWithPart(ByVal listOfAsmCriteria As List(Of Criteria), ByVal listOfPartAndDrawCriteria As List(Of Criteria), ByVal partSaveLocation As String)
+        'открыть документ детали
+        Dim partDoc As PartDocument
         Try
-            asmDoc = _invApp.Documents.Open(assemblySaveLocation)
+            partDoc = _invApp.Documents.Open(partSaveLocation)
         Catch Exc As Exception
-            MsgBox("Не удалось открыть документ сборки. Ошибка: " & Exc.Message)
+            MsgBox("Не удалось открыть документ детали. Ошибка: " & Exc.Message)
             Exit Sub
         End Try
 
-        'продолжать работу с Inventor можно, если открыт 1 документ, и тип открытого документа - Assembly
-        If (_invApp.Documents.Count > 0) And (_invApp.ActiveDocument.DocumentType = DocumentTypeEnum.kAssemblyDocumentObject) Then
-            '2. работа со сборкой - заполнение данных для нее
-            'сборка одна, циклы не нужны.
-            'десериализация файла json для сборок, создание списка критериев на один документ
-            deserialization(_name_of_list_of_criteria_for_assembly, listOfAsmCriteria, Server.MapPath("Data"))
+        'продолжать работу с Inventor можно, если открыт 1 документ, и тип открытого документа - Part
+        If (_invApp.Documents.Count > 0) And (_invApp.ActiveDocument.DocumentType = DocumentTypeEnum.kPartDocumentObject) Then
+            'работа с деталью и ее чертежом - заполнение данных для них
+            'десериализация файла json для детали и чертежа, создание списка критериев на один документ
+            deserialization(_name_of_list_of_criteria_for_part_and_drawing, listOfPartAndDrawCriteria, Server.MapPath("Data"))
 
-            'непосредственное получение данных сборки из Inventor
-            getAsmData(asmDoc, listOfAsmCriteria)
+            'непосредственное получение данных детали из Inventor
+            getPartAndDrawingData(partDoc, listOfPartAndDrawCriteria)
 
-            '3. работа с деталями и чертежами сборки - заполнение данных для них
-            'деталей в сборке несколько, нужен цикл прохода по ним
-            'пройти по всем деталям, которые есть в сборке
-            For i As Integer = asmDoc.AllReferencedDocuments.Count To 1 Step -1
-                'текущая деталь, для которой будут получены данные
-                Dim currentPartDoc As PartDocument = asmDoc.AllReferencedDocuments(i)
-                'десериализация файла json для деталей и чертежей, создание списка критериев на один документ
-                deserialization(_name_of_list_of_criteria_for_part_and_drawing, listOfPartAndDrawCriteria, Server.MapPath("Data"))
-
-                'непосредственное получение данных детали  из Inventor
-                getPartAndDrawingData(currentPartDoc, listOfPartAndDrawCriteria)
-            Next
-
-            '4. критерии в списках заполнены. закрыть все открытые документы
+            'критерии в списках заполнены. закрыть все открытые документы
             _invApp.Documents.CloseAll()
         Else
-            MsgBox("Не удалось открыть документ сборки.")
+            MsgBox("Не удалось открыть документ детали.")
             Exit Sub
         End If
     End Sub
@@ -288,4 +258,5 @@ Public Class MainWebForm
 
         lblCountOfRows.Text = _listOfResults.Count.ToString() 'заполнение элемента вывода количества строк
     End Sub
+
 End Class

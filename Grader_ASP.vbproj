@@ -103,6 +103,7 @@
   <ItemGroup>
     <Content Include="ErrorWebForm.aspx" />
     <Content Include="MainWebForm.aspx" />
+    <Content Include="PartsWebForm.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +115,7 @@
       <DependentUpon>ErrorWebForm.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
+    <Compile Include="CommonFunctionsModule.vb" />
     <Compile Include="MainWebForm.aspx.designer.vb">
       <DependentUpon>MainWebForm.aspx</DependentUpon>
     </Compile>
@@ -139,6 +141,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="PartsWebForm.aspx.designer.vb">
+      <DependentUpon>PartsWebForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PartsWebForm.aspx.vb">
+      <DependentUpon>PartsWebForm.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="Result.vb" />
     <Compile Include="Site.Master.designer.vb">

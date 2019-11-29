@@ -46,18 +46,27 @@ form1 элемент управления.
 Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
 </remarks>
 </member>
-<member name="F:Grader_ASP.MainWebForm._locationOfStandardAssembly">
+<member name="F:Grader_ASP.MainWebForm._btnToPartsWebForm">
 <summary>
-locationOfStandardAssembly элемент управления.
+btnToPartsWebForm элемент управления.
 </summary>
 <remarks>
 Автоматически создаваемое поле.
 Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
 </remarks>
 </member>
-<member name="F:Grader_ASP.MainWebForm._locationOfCheckedAssembly">
+<member name="F:Grader_ASP.MainWebForm._locationOfStandardDocument">
 <summary>
-locationOfCheckedAssembly элемент управления.
+locationOfStandardDocument элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.MainWebForm._locationOfCheckedDocument">
+<summary>
+locationOfCheckedDocument элемент управления.
 </summary>
 <remarks>
 Автоматически создаваемое поле.
@@ -101,6 +110,78 @@ btnExportTable элемент управления.
 </remarks>
 </member>
 <member name="F:Grader_ASP.MainWebForm._btnClearTable">
+<summary>
+btnClearTable элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._btnToMainWebForm">
+<summary>
+btnToMainWebForm элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._locationOfStandardDocument">
+<summary>
+locationOfStandardDocument элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._locationOfCheckedDocument">
+<summary>
+locationOfCheckedDocument элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._SubmitToServer">
+<summary>
+SubmitToServer элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._tableOfResults">
+<summary>
+tableOfResults элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._lblCountOfRows">
+<summary>
+lblCountOfRows элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._btnExportTable">
+<summary>
+btnExportTable элемент управления.
+</summary>
+<remarks>
+Автоматически создаваемое поле.
+Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+</remarks>
+</member>
+<member name="F:Grader_ASP.PartsWebForm._btnClearTable">
 <summary>
 btnClearTable элемент управления.
 </summary>

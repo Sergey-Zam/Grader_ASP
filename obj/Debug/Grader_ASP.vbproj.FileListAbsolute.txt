@@ -50,13 +50,13 @@ C:\Users\Сергей\source\repos\Grader_ASP\bin\roslyn\VBCSCompiler.exe
 C:\Users\Сергей\source\repos\Grader_ASP\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Сергей\source\repos\Grader_ASP\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Сергей\source\repos\Grader_ASP\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbprojAssemblyReference.cache
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.Resources.resources
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbproj.GenerateResource.cache
-C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbproj.CopyComplete
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.dll
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.xml
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.pdb
 C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbproj.ResolveComReference.cache
 C:\Users\Сергей\source\repos\Grader_ASP\bin\Newtonsoft.Json.dll
 C:\Users\Сергей\source\repos\Grader_ASP\bin\Newtonsoft.Json.xml
+C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbprojAssemblyReference.cache
+C:\Users\Сергей\source\repos\Grader_ASP\obj\Debug\Grader_ASP.vbproj.CopyComplete

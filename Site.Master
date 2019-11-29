@@ -4,29 +4,42 @@
 
 <html>
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Grader</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-
+    <!-- jQuery Plugin -->
+    <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
     <!--стили-->
     <style type="text/css">
         /*CSS переменные*/
         :root {
             --blue: #1565C0;
             --light-gray: #F5F5F5;
-            --gray: #BDBDBD;           
+            --gray: #BDBDBD;
+            --dark-gray: #424242;
         }
 
         /*классы и идентификаторы*/
-        h2 , h4 {
-            margin-left: 10px;
-            margin-right: 10px;
+        .loadingDiv {
+            position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: gray;
+			opacity: 0.33;
+			z-index: 9999;
+        }
+        h3 {
+            text-align-last: center;
+            color: var(--blue);
+            margin: 0px;
         }
         input {
             margin-bottom: 10px;
             border: 1px solid var(--blue);                
-        }
+        }        
         .button {
             border: 2px solid var(--blue);
             background: white;
@@ -39,23 +52,34 @@
             font-family: Calibri Light, Calibri, Arial, sans-serif;
             font-size: 12pt;
             text-align: left;
+            overflow: hidden;
         }
-       .header_div {
-           width: 100%;
-           background-color: var(--blue);
-           color: white;
-           text-align: center;
-           font-size: 24pt;
-           font-weight: bold;
-       }
-       .content_div {
-           width: 100%;
-           overflow: hidden;
-       }
-       .left_div {
+        .header_div {
+           position: absolute;
            width: 20%;
+           color: var(--blue);
+           text-align: center;
+           font-size: 22pt;
+           font-weight: bold;
+           margin-top: 10px;
+       }
+        .left_div {
+           width: 20%;
+           height: 100vh;
            float:left;
            text-align: left;
+           color: var(--dark-gray);
+
+           display: table;
+       }
+       .instructions_div { 
+           width: calc(100%-20px);
+           padding-left: 10px;
+           padding-right: 10px;
+           font-size: 14pt;
+
+           display: table-cell;         
+           vertical-align: middle;
        }
        .right_div {          
            height: 100vh;
@@ -63,10 +87,14 @@
            float: left;
            background-color: white;
            border-left: 1px solid var(--blue);
+           overflow-y: auto;
        }
        .line_div {
            text-align: left;
-           padding: 10px;
+           padding-left: 10px;
+           padding-right: 10px;
+           padding-top: 10px;
+           width: calc(100% - 20px);
        }
        .tableOfResults {
            overflow-y: scroll;
@@ -74,14 +102,36 @@
            background-color: var(--gray);
        }
 
+       /* переносить текст внутри кнопок
+           .wrap_btn { 
+            white-space: normal; 
+            width: 50%; 
+        } 
+       */
    </style> 
 </head>
-<body>
-    <form id="form1" method="post" enctype="multipart/form-data" runat="server">        
+    <body>
+    <form id="form1" method="post" enctype="multipart/form-data" runat="server">   
         <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <!--общий контент перед уник. кодом каждой страницы-->        
+            <div class="header_div">Grader</div>
+            <div class="left_div">               
+                <div class="instructions_div">
+                    Алгоритм работы с программой: <br />
+                    1. Импортируйте документ-образец (эталон) <br />
+                    2. Импортируйте проверяемый документ <br />
+                    3. Подождите <br />
+                    4. Полученный результат можно экспортировать в файл формата MS Excel
+                </div>                               
+            </div>
+
+            <!--уник. код каждой страницы-->
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">                
             </asp:ContentPlaceHolder>
+
+            <!--общий контент после уник. кода каждой страницы-->
         </div>
     </form>
 </body>
+
 </html>

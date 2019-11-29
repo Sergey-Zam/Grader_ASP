@@ -1,21 +1,21 @@
-﻿<%@ Page Title="Сравнение сборок" Language="vb" Async="true" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="MainWebForm.aspx.vb" Inherits="Grader_ASP.MainWebForm" %>
+﻿<%@ Page Title="Сравнение деталей" Language="vb" Async="true" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="PartsWebForm.aspx.vb" Inherits="Grader_ASP.PartsWebForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <!--Начало контента-->
     <script type="text/javascript"></script> <!--пустая заготовка для возможных скриптов-->   
 
     <div class="right_div">
         <div class="line_div" style="text-align: right">
-            <asp:Button ID="btnToPartsWebForm" runat="server" Text="Сравнить две детали" BackColor="White" BorderStyle="Solid" ForeColor="#1565C0" BorderColor="#1565C0" BorderWidth="2px"/>
-        </div>         
-        <h3>Сравнение сборок</h3>
+            <asp:Button ID="btnToMainWebForm" runat="server" Text="Сравнить две сборки" BackColor="White" BorderStyle="Solid" ForeColor="#1565C0" BorderColor="#1565C0" BorderWidth="2px"/>
+        </div>
+        <h3>Сравнение деталей</h3>
 
         <div class="line_div">
-            Файл эталонной сборки (.iam) <br />     
-            <input type=file id="locationOfStandardDocument" runat="server" accept=".iam" size="50"/>  <br /> 
-            Файл проверяемой сборки (.iam) <br />      
-            <input type="file" id="locationOfCheckedDocument" runat="server" accept=".iam" size="50"/> <br /> 
+            Файл эталонной детали (.ipt) <br />
+            <input type=file id="locationOfStandardDocument" runat="server" accept=".ipt" size="50"/>  <br /> 
+            Файл проверяемой детали (.ipt) <br />      
+            <input type="file" id="locationOfCheckedDocument" runat="server" accept=".ipt" size="50"/> <br /> 
             <input type="submit" id="SubmitToServer" value="Загрузить файлы на сервер и получить результат" runat="server" onclick="SubmitToServer_Click" style="width: 100%;" class="button"/>
         </div>
         <div class="line_div" style="text-align: center;" >       
