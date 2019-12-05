@@ -21,12 +21,12 @@ Public Class PartsWebForm
                 _invApp.Visible = True
                 _isAppAutoStarted = True
             Catch ex2 As Exception
-                MsgBox(ex2.ToString())
+                MsgBox(ex2.ToString(), vbSystemModal, "Ошибка")
             End Try
         End Try
 
         If _invApp Is Nothing Then
-            MsgBox("Не удалось ни найти, ни создать сеанс Inventor")
+            MsgBox("Не удалось ни найти, ни создать сеанс Inventor", vbSystemModal, "Ошибка")
             Server.Transfer("ErrorWebForm.aspx")
         End If
     End Sub
@@ -34,12 +34,8 @@ Public Class PartsWebForm
     'функция по нажатию кнопки экспорт таблицы в excel
     'нельзя вынести в модуль, много привязок к элементам конкретной страницы
     Protected Sub btnExportTable_Click(sender As Object, e As EventArgs) Handles btnExportTable.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
         If lblCountOfRows.Text = "0" Or _finalMessageString = "" Then
-            MsgBox("Сначала необходимо получить данные из деталей")
+            MsgBox("Сначала необходимо получить данные из деталей", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -68,10 +64,6 @@ Public Class PartsWebForm
 
     'функция по нажатию кнопки очистить таблицу
     Protected Sub btnClearTable_Click(sender As Object, e As EventArgs) Handles btnClearTable.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
         _listOfStndAsmCriteria.Clear() 'список для хранения данных самой стандартной сборки
         _listOfStndPartAndDrawCriteria.Clear() 'список для хранения данных деталей и чертежей стандартной сборки
         _listOfChekAsmCriteria.Clear() 'список для хранения данных самой проверяемой сборки
@@ -83,25 +75,11 @@ Public Class PartsWebForm
         tableOfResults.InnerHtml = "" 'очистка таблицы
     End Sub
 
-    'функция по нажатию кнопки (переход на другую страницу: сравнить сборки)
-    Protected Sub btnToMainWebForm_Click(sender As Object, e As EventArgs) Handles btnToMainWebForm.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
-        Server.Transfer("MainWebForm.aspx") 'переход на страницу
-    End Sub
-
     'функция по нажатию кнопки загрузить файлы на сервер
     Private Sub SubmitToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SubmitToServer.ServerClick
-        If _blocked = True Then
-            Exit Sub
-        End If
-
-        _blocked = True 'Долгий процесс, нуждающийся в блокировке других действий
-
         _stndDocumentSaveLocation = ""
         _chekDocumentSaveLocation = ""
+        _invApp.Documents.CloseAll()
 
         '1. загрузить файл эталонной детали на сервер
         If Not locationOfStandardDocument.PostedFile Is Nothing And locationOfStandardDocument.PostedFile.ContentLength > 0 Then
@@ -110,13 +88,11 @@ Public Class PartsWebForm
             Try
                 locationOfStandardDocument.PostedFile.SaveAs(_stndDocumentSaveLocation)
             Catch Exc As Exception
-                _blocked = False
-                MsgBox("Ошибка: " & Exc.Message)
+                MsgBox("Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
                 Exit Sub
             End Try
         Else
-            _blocked = False
-            MsgBox("Не выбран файл эталонной детали для загрузки")
+            MsgBox("Не выбран файл эталонной детали для загрузки", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -127,13 +103,11 @@ Public Class PartsWebForm
             Try
                 locationOfCheckedDocument.PostedFile.SaveAs(_chekDocumentSaveLocation)
             Catch Exc As Exception
-                _blocked = False
-                MsgBox("Ошибка: " & Exc.Message)
+                MsgBox("Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
                 Exit Sub
             End Try
         Else
-            _blocked = False
-            MsgBox("Не выбран файл проверяемой детали для загрузки")
+            MsgBox("Не выбран файл проверяемой детали для загрузки", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -146,16 +120,16 @@ Public Class PartsWebForm
             _listOfChekAsmCriteria.Clear()
             _listOfChekPartAndDrawCriteria.Clear()
 
-            '4. работа с эталонной сборкой (и всеми входящими в нее документами)
+            '4. работа с эталонной деталью (и всеми входящими в нее документами)
             WorkWithPart(_listOfStndAsmCriteria, _listOfStndPartAndDrawCriteria, _stndDocumentSaveLocation)
 
-            '5. работа с проверяемой сборкой (и всеми входящими в нее документами)
+            '5. работа с проверяемой деталью (и всеми входящими в нее документами)
             WorkWithPart(_listOfChekAsmCriteria, _listOfChekPartAndDrawCriteria, _chekDocumentSaveLocation)
 
+            'MsgBox("Дошли до проверка: длины листов")
             'проверка: длины листов эталонные_детали и проверяемые_детали должны быть равны, иначе работа прекращается
             If Not _listOfStndPartAndDrawCriteria.Count = _listOfChekPartAndDrawCriteria.Count Then
-                _blocked = False
-                MsgBox("Ошибка. Количество деталей в сборках не совпадает, сравнение не может быть проведено.")
+                MsgBox("Ошибка. Количество деталей в сборках не совпадает, сравнение не может быть проведено.", vbSystemModal, "Ошибка")
                 Exit Sub
             End If
 
@@ -177,8 +151,6 @@ Public Class PartsWebForm
             results = ser.Serialize(_listOfChekPartAndDrawCriteria)
             System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "CheckedPart.json", results)
         End If
-
-        _blocked = False
     End Sub
 
     'работа с деталью
@@ -188,7 +160,7 @@ Public Class PartsWebForm
         Try
             partDoc = _invApp.Documents.Open(partSaveLocation)
         Catch Exc As Exception
-            MsgBox("Не удалось открыть документ детали. Ошибка: " & Exc.Message)
+            MsgBox("Не удалось открыть документ детали. Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
             Exit Sub
         End Try
 
@@ -201,10 +173,10 @@ Public Class PartsWebForm
             'непосредственное получение данных детали из Inventor
             getPartAndDrawingData(partDoc, listOfPartAndDrawCriteria)
 
-            'критерии в списках заполнены. закрыть все открытые документы
-            _invApp.Documents.CloseAll()
+            'критерии в списках заполнены. закрыть конкретную деталь
+            partDoc.Close()
         Else
-            MsgBox("Не удалось открыть документ детали.")
+            MsgBox("Не удалось открыть документ детали.", vbSystemModal, "Ошибка")
             Exit Sub
         End If
     End Sub

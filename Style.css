@@ -1,0 +1,144 @@
+﻿:root {
+    --blue: #1565C0;
+    --gray: #BDBDBD;
+    --dark-gray: #424242;
+    --light-gray: #FAFAFA;
+}
+
+/*классы и идентификаторы*/
+.loadingDiv {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    background-color: var(--dark-gray);   
+    opacity: 0.77;
+    z-index: 9999;
+    visibility: hidden;
+}
+
+.loadingTop {
+    width: 100%;
+    height: 10vh;
+    line-height: 10vh;
+    margin-top: 40vh;
+    text-align: center;
+    font-size: 22pt;
+    color: #82B1FF;
+}
+.loadingBottom {
+    width: 100%;
+    height: 10vh;
+    line-height: 10vh;
+    text-align: center;
+    font-size: 16pt;
+    color: white;
+}
+
+h3 {
+    text-align-last: center;
+    color: var(--blue);
+    font-size: 16pt;
+    margin: 0px;
+    font-weight: normal;
+    font-family: sans-serif;
+    letter-spacing: 0px;
+}
+
+input {
+    margin-bottom: 10px;
+    border: 1px solid var(--blue);
+}
+
+a {
+    color: white;
+    margin-left: 10px;
+}
+
+.subButton {
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+}
+
+body {
+    width: 100%;
+    margin: 0; /* Убираем отступы */
+    background-color: var(--light-gray);
+    font-family: Calibri Light, Calibri, Arial, sans-serif;
+    font-size: 12pt;
+    text-align: left;
+}
+
+.header_div {
+    display: flex;
+    width: calc(100% - 20px);
+    background: linear-gradient(to right, white, #0D47A1);
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 3px solid var(--blue);
+    vertical-align: central;
+}
+
+.label_div {
+    color: var(--blue);
+    font-size: 25px;
+    font-weight: bold;
+    width: 50%;
+    display: inline-block;
+}
+
+.links_div {
+    margin: auto;
+    float: right;
+    width: 50%;
+    text-align: right;
+    display: inline-block;
+}
+
+.left_div {
+    width: 20%;
+    height: calc(100vh - (25px + 3px));
+    float: left;
+    text-align: left;
+    color: var(--dark-gray);
+    display: table;
+}
+
+.instructions_div {
+    width: calc(100% - 20px);
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14pt;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.right_div {
+    width: calc(80% - 1px);
+    float: left;
+    background-color: white;
+    border-left: 1px solid var(--blue);
+    overflow-y: auto;
+    padding-top: 10px;
+}
+
+.line_div {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    width: calc(100% - 20px);
+}
+
+.tableOfResults {
+    overflow-y: scroll;
+    height: 320px;
+    background-color: var(--gray);   
+}
+
+/* переносить текст внутри кнопок
+           .wrap_btn { 
+            white-space: normal; 
+            width: 50%; 
+        }*/

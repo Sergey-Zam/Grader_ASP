@@ -26,12 +26,12 @@ Public Class MainWebForm
                 _invApp.Visible = True
                 _isAppAutoStarted = True
             Catch ex2 As Exception
-                MsgBox(ex2.ToString())
+                MsgBox(ex2.ToString(), vbSystemModal, "Ошибка")
             End Try
         End Try
 
         If _invApp Is Nothing Then
-            MsgBox("Не удалось ни найти, ни создать сеанс Inventor")
+            MsgBox("Не удалось ни найти, ни создать сеанс Inventor", vbSystemModal, "Ошибка")
             Server.Transfer("ErrorWebForm.aspx")
         End If
     End Sub
@@ -39,12 +39,8 @@ Public Class MainWebForm
     'функция по нажатию кнопки экспорт таблицы в excel
     'нельзя вынести в модуль, много привязок к элементам конкретной страницы
     Protected Sub btnExportTable_Click(sender As Object, e As EventArgs) Handles btnExportTable.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
         If lblCountOfRows.Text = "0" Or _finalMessageString = "" Then
-            MsgBox("Сначала необходимо получить данные из сборок")
+            MsgBox("Сначала необходимо получить данные из сборок", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -73,10 +69,6 @@ Public Class MainWebForm
 
     'функция по нажатию кнопки очистить таблицу
     Protected Sub btnClearTable_Click(sender As Object, e As EventArgs) Handles btnClearTable.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
         _listOfStndAsmCriteria.Clear() 'список для хранения данных самой стандартной сборки
         _listOfStndPartAndDrawCriteria.Clear() 'список для хранения данных деталей и чертежей стандартной сборки
         _listOfChekAsmCriteria.Clear() 'список для хранения данных самой проверяемой сборки
@@ -88,25 +80,11 @@ Public Class MainWebForm
         tableOfResults.InnerHtml = "" 'очистка таблицы
     End Sub
 
-    'функция по нажатию кнопки (переход на другую страницу: сравнить детали) 
-    Protected Sub btnToPartsWebForm_Click(sender As Object, e As EventArgs) Handles btnToPartsWebForm.Click
-        If _blocked = True Then
-            Exit Sub
-        End If
-
-        Server.Transfer("PartsWebForm.aspx") 'переход на страницу
-    End Sub
-
     'функция по нажатию кнопки загрузить файлы на сервер
     Private Sub SubmitToServer_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SubmitToServer.ServerClick
-        If _blocked = True Then
-            Exit Sub
-        End If
-
-        _blocked = True 'Долгий процесс, нуждающийся в блокировке других действий
-
         _stndDocumentSaveLocation = ""
         _chekDocumentSaveLocation = ""
+        _invApp.Documents.CloseAll()
 
         '1. загрузить файл эталонной сборки на сервер
         If Not locationOfStandardDocument.PostedFile Is Nothing And locationOfStandardDocument.PostedFile.ContentLength > 0 Then
@@ -115,13 +93,11 @@ Public Class MainWebForm
             Try
                 locationOfStandardDocument.PostedFile.SaveAs(_stndDocumentSaveLocation)
             Catch Exc As Exception
-                _blocked = False
-                MsgBox("Ошибка: " & Exc.Message)
+                MsgBox("Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
                 Exit Sub
             End Try
         Else
-            _blocked = False
-            MsgBox("Не выбран файл эталонной сборки для загрузки")
+            MsgBox("Не выбран файл эталонной сборки для загрузки", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -132,13 +108,11 @@ Public Class MainWebForm
             Try
                 locationOfCheckedDocument.PostedFile.SaveAs(_chekDocumentSaveLocation)
             Catch Exc As Exception
-                _blocked = False
-                MsgBox("Ошибка: " & Exc.Message)
+                MsgBox("Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
                 Exit Sub
             End Try
         Else
-            _blocked = False
-            MsgBox("Не выбран файл проверяемой сборки для загрузки")
+            MsgBox("Не выбран файл проверяемой сборки для загрузки", vbSystemModal, "Ошибка")
             Exit Sub
         End If
 
@@ -158,14 +132,12 @@ Public Class MainWebForm
 
             'проверка: длины листов эталонная_сборка и проверяемая_сборка должны быть равны, иначе работа прекращается
             If Not _listOfStndAsmCriteria.Count = _listOfChekAsmCriteria.Count Then
-                _blocked = False
-                MsgBox("Ошибка. Количество сборок не совпадает, сравнение не может быть проведено.")
+                MsgBox("Ошибка. Количество сборок не совпадает, сравнение не может быть проведено.", vbSystemModal, "Ошибка")
                 Exit Sub
             End If
             'проверка: длины листов эталонные_детали и проверяемые_детали должны быть равны, иначе работа прекращается
             If Not _listOfStndPartAndDrawCriteria.Count = _listOfChekPartAndDrawCriteria.Count Then
-                _blocked = False
-                MsgBox("Ошибка. Количество деталей в сборках не совпадает, сравнение не может быть проведено.")
+                MsgBox("Ошибка. Количество деталей в сборках не совпадает, сравнение не может быть проведено.", vbSystemModal, "Ошибка")
                 Exit Sub
             End If
 
@@ -193,8 +165,6 @@ Public Class MainWebForm
             results = ser.Serialize(_listOfChekPartAndDrawCriteria)
             System.IO.File.WriteAllText(Server.MapPath("Data") & "\" & "CheckedPart.json", results)
         End If
-
-        _blocked = False
     End Sub
 
     'работа со сборкой
@@ -204,7 +174,7 @@ Public Class MainWebForm
         Try
             asmDoc = _invApp.Documents.Open(assemblySaveLocation)
         Catch Exc As Exception
-            MsgBox("Не удалось открыть документ сборки. Ошибка: " & Exc.Message)
+            MsgBox("Не удалось открыть документ сборки. Ошибка: " & Exc.Message, vbSystemModal, "Ошибка")
             Exit Sub
         End Try
 
@@ -234,7 +204,7 @@ Public Class MainWebForm
             '4. критерии в списках заполнены. закрыть все открытые документы
             _invApp.Documents.CloseAll()
         Else
-            MsgBox("Не удалось открыть документ сборки.")
+            MsgBox("Не удалось открыть документ сборки.", vbSystemModal, "Ошибка")
             Exit Sub
         End If
     End Sub

@@ -14,15 +14,6 @@ Option Explicit On
 Partial Public Class MainWebForm
 
     '''<summary>
-    '''btnToPartsWebForm элемент управления.
-    '''</summary>
-    '''<remarks>
-    '''Автоматически создаваемое поле.
-    '''Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-    '''</remarks>
-    Protected WithEvents btnToPartsWebForm As Global.System.Web.UI.WebControls.Button
-
-    '''<summary>
     '''locationOfStandardDocument элемент управления.
     '''</summary>
     '''<remarks>

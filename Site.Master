@@ -8,113 +8,26 @@
     <title>Grader</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <!-- jQuery Plugin -->
-    <script src="http://code.jquery.com/jquery-3.1.0.js"></script>
-    <!--стили-->
-    <style type="text/css">
-        /*CSS переменные*/
-        :root {
-            --blue: #1565C0;
-            --light-gray: #F5F5F5;
-            --gray: #BDBDBD;
-            --dark-gray: #424242;
-        }
-
-        /*классы и идентификаторы*/
-        .loadingDiv {
-            position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: gray;
-			opacity: 0.33;
-			z-index: 9999;
-        }
-        h3 {
-            text-align-last: center;
-            color: var(--blue);
-            margin: 0px;
-        }
-        input {
-            margin-bottom: 10px;
-            border: 1px solid var(--blue);                
-        }        
-        .button {
-            border: 2px solid var(--blue);
-            background: white;
-            color: var(--blue);
-        }
-        body {
-            width: 100%;
-            margin: 0; /* Убираем отступы */
-            background-color: var(--light-gray);
-            font-family: Calibri Light, Calibri, Arial, sans-serif;
-            font-size: 12pt;
-            text-align: left;
-            overflow: hidden;
-        }
-        .header_div {
-           position: absolute;
-           width: 20%;
-           color: var(--blue);
-           text-align: center;
-           font-size: 22pt;
-           font-weight: bold;
-           margin-top: 10px;
-       }
-        .left_div {
-           width: 20%;
-           height: 100vh;
-           float:left;
-           text-align: left;
-           color: var(--dark-gray);
-
-           display: table;
-       }
-       .instructions_div { 
-           width: calc(100%-20px);
-           padding-left: 10px;
-           padding-right: 10px;
-           font-size: 14pt;
-
-           display: table-cell;         
-           vertical-align: middle;
-       }
-       .right_div {          
-           height: 100vh;
-           width: calc(80% - 1px);
-           float: left;
-           background-color: white;
-           border-left: 1px solid var(--blue);
-           overflow-y: auto;
-       }
-       .line_div {
-           text-align: left;
-           padding-left: 10px;
-           padding-right: 10px;
-           padding-top: 10px;
-           width: calc(100% - 20px);
-       }
-       .tableOfResults {
-           overflow-y: scroll;
-           height: 350px;
-           background-color: var(--gray);
-       }
-
-       /* переносить текст внутри кнопок
-           .wrap_btn { 
-            white-space: normal; 
-            width: 50%; 
-        } 
-       */
-   </style> 
+    <link rel="stylesheet" type="text/css" href="Style.css" /> <!--файл css стилей-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> <!-- jQuery Plugin -->    
+    <script src='Jquery.js'></script><!--файл Jquery скриптов-->
 </head>
     <body>
     <form id="form1" method="post" enctype="multipart/form-data" runat="server">   
         <div>
-            <!--общий контент перед уник. кодом каждой страницы-->        
-            <div class="header_div">Grader</div>
+            <!--общий контент перед уник. кодом каждой страницы-->
+            <div class="loadingDiv">
+                <div class="loadingTop">Пожалуйста, подождите</div>
+                <div class="loadingBottom">Идет получение и сравнение данных из документов</div>                
+            </div>
+            <div class="header_div">
+                <div class="label_div">Grader</div>
+                <div class="links_div">
+                    <a href="MainWebForm.aspx">Сравнить сборки</a>
+                    <a href="PartsWebForm.aspx">Сравнить детали</a>  
+                </div>          
+            </div>
+                   
             <div class="left_div">               
                 <div class="instructions_div">
                     Алгоритм работы с программой: <br />

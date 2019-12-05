@@ -21,7 +21,6 @@ Module CommonFunctionsModule
     Public _count_of_list_of_criteria_for_part_and_drawing As Integer = 36 'количество записей в list_of_criteria_for_part_and_drawing.json
     Public _listOfResults As New List(Of Result)() 'список результатов сравнения, выводится в таблицу на веб-форму
     Public _finalMessageString As String = "" 'строка результатов, выводимая в конце работы (сравнения) программы
-    Public _blocked As Boolean = False 'переменная, указывющая, возможны ли сейчас какие-либо действия на странице
 
     'ФУНКЦИИ
     'непосредственное получение данных сборки из Inventor
@@ -515,7 +514,7 @@ Module CommonFunctionsModule
         _finalMessageString &= "Параметров не совпало: " & wrong & vbCrLf
         _finalMessageString &= "Набрано баллов (из возможных): " & total_ball & " / " & possible_ball & vbCrLf
         _finalMessageString &= "Баллы в процентах: " & (Math.Round(percent, 4) * 100) & "%"
-        Call MsgBox(_finalMessageString, vbSystemModal, "Результаты сравнения")
+        MsgBox(_finalMessageString, vbSystemModal, "Результаты сравнения")
     End Sub
 
 
@@ -609,7 +608,7 @@ Module CommonFunctionsModule
             ' Return result. Если не найден чертеж, вернет пустую строку ""
             Return drawingFilename
         Catch ex As Exception
-            MsgBox("Ошибка: невозможно найти чертеж для документа" & vbCrLf & ex.ToString)
+            MsgBox("Ошибка: невозможно найти чертеж для документа" & vbCrLf & ex.ToString, vbSystemModal, "Ошибка")
             Return ""
         End Try
     End Function

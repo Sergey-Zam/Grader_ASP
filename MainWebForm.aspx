@@ -1,14 +1,9 @@
 ﻿<%@ Page Title="Сравнение сборок" Language="vb" Async="true" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="MainWebForm.aspx.vb" Inherits="Grader_ASP.MainWebForm" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    </asp:Content>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">   
     <!--Начало контента-->
-    <script type="text/javascript"></script> <!--пустая заготовка для возможных скриптов-->   
-
-    <div class="right_div">
-        <div class="line_div" style="text-align: right">
-            <asp:Button ID="btnToPartsWebForm" runat="server" Text="Сравнить две детали" BackColor="White" BorderStyle="Solid" ForeColor="#1565C0" BorderColor="#1565C0" BorderWidth="2px"/>
-        </div>         
+    <div class="right_div">      
         <h3>Сравнение сборок</h3>
 
         <div class="line_div">
@@ -16,7 +11,7 @@
             <input type=file id="locationOfStandardDocument" runat="server" accept=".iam" size="50"/>  <br /> 
             Файл проверяемой сборки (.iam) <br />      
             <input type="file" id="locationOfCheckedDocument" runat="server" accept=".iam" size="50"/> <br /> 
-            <input type="submit" id="SubmitToServer" value="Загрузить файлы на сервер и получить результат" runat="server" onclick="SubmitToServer_Click" style="width: 100%;" class="button"/>
+            <input type="submit" class="subButton" id="SubmitToServer" value="Загрузить файлы на сервер и получить результат" runat="server" onclick="SubmitToServer_Click" style="width: 100%;"/>
         </div>
         <div class="line_div" style="text-align: center;" >       
             Таблица результатов

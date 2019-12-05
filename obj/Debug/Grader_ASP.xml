@@ -46,15 +46,6 @@ form1 элемент управления.
 Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
 </remarks>
 </member>
-<member name="F:Grader_ASP.MainWebForm._btnToPartsWebForm">
-<summary>
-btnToPartsWebForm элемент управления.
-</summary>
-<remarks>
-Автоматически создаваемое поле.
-Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-</remarks>
-</member>
 <member name="F:Grader_ASP.MainWebForm._locationOfStandardDocument">
 <summary>
 locationOfStandardDocument элемент управления.
@@ -112,15 +103,6 @@ btnExportTable элемент управления.
 <member name="F:Grader_ASP.MainWebForm._btnClearTable">
 <summary>
 btnClearTable элемент управления.
-</summary>
-<remarks>
-Автоматически создаваемое поле.
-Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
-</remarks>
-</member>
-<member name="F:Grader_ASP.PartsWebForm._btnToMainWebForm">
-<summary>
-btnToMainWebForm элемент управления.
 </summary>
 <remarks>
 Автоматически создаваемое поле.

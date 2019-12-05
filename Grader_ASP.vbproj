@@ -102,8 +102,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ErrorWebForm.aspx" />
+    <Content Include="Jquery.js" />
     <Content Include="MainWebForm.aspx" />
     <Content Include="PartsWebForm.aspx" />
+    <Content Include="Style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
