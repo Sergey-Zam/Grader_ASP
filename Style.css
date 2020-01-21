@@ -1,8 +1,8 @@
 ﻿:root {
-    --blue: #1565C0;
-    --gray: #BDBDBD;
-    --dark-gray: #424242;
-    --light-gray: #FAFAFA;
+    --main-blue: #0288D1;
+    --second-blue: #82B1FF;
+    --light-gray: #EEEEEE;
+    --dark-gray: #757575;
 }
 
 /*классы и идентификаторы*/
@@ -11,8 +11,8 @@
     width: 100%;
     height: 100vh;
     text-align: center;
-    background-color: var(--dark-gray);   
-    opacity: 0.77;
+    background-color: black;   
+    opacity: 0.7;
     z-index: 9999;
     visibility: hidden;
 }
@@ -24,7 +24,7 @@
     margin-top: 40vh;
     text-align: center;
     font-size: 22pt;
-    color: #82B1FF;
+    color: var(--second-blue);
 }
 .loadingBottom {
     width: 100%;
@@ -37,7 +37,7 @@
 
 h3 {
     text-align-last: center;
-    color: var(--blue);
+    color: var(--main-blue);
     font-size: 16pt;
     margin: 0px;
     font-weight: normal;
@@ -47,24 +47,28 @@ h3 {
 
 input {
     margin-bottom: 10px;
-    border: 1px solid var(--blue);
+    border: 1px solid var(--main-blue);
 }
 
 a {
     color: white;
-    margin-left: 10px;
+    margin-left: 12px;
+}
+
+a:hover {
+    color: var(--second-blue);
 }
 
 .subButton {
-    border: 2px solid var(--blue);
+    border: 2px solid var(--main-blue);
     background: white;
-    color: var(--blue);
+    color: var(--main-blue);
 }
 
 body {
     width: 100%;
     margin: 0; /* Убираем отступы */
-    background-color: var(--light-gray);
+    background-color: white;
     font-family: Calibri Light, Calibri, Arial, sans-serif;
     font-size: 12pt;
     text-align: left;
@@ -72,20 +76,20 @@ body {
 
 .header_div {
     display: flex;
-    width: calc(100% - 20px);
-    background: linear-gradient(to right, white, #0D47A1);
-    padding-left: 10px;
-    padding-right: 10px;
-    border-bottom: 3px solid var(--blue);
+    width: calc(100% - 40px);
+    padding-left: 20px;
+    padding-right: 20px;
     vertical-align: central;
+    color: white;
+    background-color: black;
 }
 
 .label_div {
-    color: var(--blue);
-    font-size: 25px;
+    font-size: 24px;
     font-weight: bold;
     width: 50%;
     display: inline-block;
+    color: var(--second-blue);
 }
 
 .links_div {
@@ -101,8 +105,9 @@ body {
     height: calc(100vh - (25px + 3px));
     float: left;
     text-align: left;
-    color: var(--dark-gray);
+    color: white;
     display: table;
+    background-color: var(--dark-gray);
 }
 
 .instructions_div {
@@ -115,10 +120,10 @@ body {
 }
 
 .right_div {
-    width: calc(80% - 1px);
+    width: 80%;
+    /*width: calc(80% - 1px);*/
+    /*border-left: 1px solid var(--main-blue);*/
     float: left;
-    background-color: white;
-    border-left: 1px solid var(--blue);
     overflow-y: auto;
     padding-top: 10px;
 }
@@ -134,11 +139,17 @@ body {
 .tableOfResults {
     overflow-y: scroll;
     height: 320px;
-    background-color: var(--gray);   
+    background-color: var(--light-gray);
 }
 
 /* переносить текст внутри кнопок
            .wrap_btn { 
             white-space: normal; 
             width: 50%; 
-        }*/
+        }
+
+
+    градиенты
+    background: linear-gradient(to bottom, #00B0FF, #0D47A1);
+    background: radial-gradient(var(--dark-gray), white);
+*/

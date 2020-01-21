@@ -18,7 +18,7 @@ Module CommonFunctionsModule
     Public _name_of_list_of_criteria_for_assembly As String = "list_of_criteria_for_assembly.json" 'имя list_of_criteria_for_assembly.json
     Public _name_of_list_of_criteria_for_part_and_drawing As String = "list_of_criteria_for_part_and_drawing.json" 'имя list_of_criteria_for_part_and_drawing.json
     Public _count_of_list_of_criteria_for_assembly As Integer = 27 'количество записей в list_of_criteria_for_assembly.json
-    Public _count_of_list_of_criteria_for_part_and_drawing As Integer = 36 'количество записей в list_of_criteria_for_part_and_drawing.json
+    Public _count_of_list_of_criteria_for_part_and_drawing As Integer = 40 'количество записей в list_of_criteria_for_part_and_drawing.json
     Public _listOfResults As New List(Of Result)() 'список результатов сравнения, выводится в таблицу на веб-форму
     Public _finalMessageString As String = "" 'строка результатов, выводимая в конце работы (сравнения) программы
 
@@ -270,6 +270,34 @@ Module CommonFunctionsModule
         '"Сколько раз применена операция Thread (резьба)"
         writeToList("P28", features.ThreadFeatures.Count, listOfPartAndDrawCriteria, first, last)
 
+        'следующие аспекты связаны с BoundingBox
+        'получение SurfaceBody текущей детали
+        Dim oPartDef As PartComponentDefinition = partDoc.ComponentDefinition
+        Dim body As SurfaceBody = oPartDef.SurfaceBodies.Item(1)
+        ' Call the function to get the tight bounding box.
+        'Рассчет BoundingBox
+        Dim bndBox As Box = calculateTightBoundingBox(body)
+        'длины сторон x,y,z
+        Dim x_l As Double = Math.Abs(bndBox.MaxPoint.X - bndBox.MinPoint.X)
+        Dim y_l As Double = Math.Abs(bndBox.MaxPoint.Y - bndBox.MinPoint.Y)
+        Dim z_l As Double = Math.Abs(bndBox.MaxPoint.Z - bndBox.MinPoint.Z)
+
+        '"Объем BoundingBox
+        Dim v = x_l * y_l * z_l
+        writeToList("P29", v, listOfPartAndDrawCriteria, first, last)
+
+        '"Площадь BoundingBox
+        Dim s = 2 * (x_l * y_l + x_l * z_l + y_l * z_l)
+        writeToList("P30", s, listOfPartAndDrawCriteria, first, last)
+
+        '"Диагональ BoundingBox
+        Dim d = Math.Sqrt(x_l * x_l + y_l * y_l + z_l * z_l)
+        writeToList("P31", d, listOfPartAndDrawCriteria, first, last)
+
+        '"Периметр BoundingBox
+        Dim p = 4 * (x_l + y_l + z_l)
+        writeToList("P32", p, listOfPartAndDrawCriteria, first, last)
+
         'РАБОТА С ЧЕРТЕЖОМ (DRAWING)
         'для текущей детали определить, есть ли для нее чертеж. если есть, получить данные и чертежа
         Dim drawingFullFileName As String = findDrawingFullFileNameForDocument(partDoc, _invApp) 'найти, если возможно, путь к чертежу детали
@@ -279,8 +307,11 @@ Module CommonFunctionsModule
             Exit Sub
         End If
 
-        'если чертеж найден:
-        Dim drawingDoc As DrawingDocument = _invApp.Documents.Open(drawingFullFileName) 'открыть чертеж
+        'если чертеж найден, открыть (здесь - открыть невидимо) и работать с ним:
+        Dim oEmptyNameValueMap As NameValueMap = _invApp.TransientObjects.CreateNameValueMap
+        Dim drawingDoc As DrawingDocument = _invApp.Documents.OpenWithOptions(drawingFullFileName, oEmptyNameValueMap, False)
+
+        'del Dim drawingDoc As DrawingDocument = _invApp.Documents.Open(drawingFullFileName) 'открыть чертеж
 
         'заполнение value-получить данные чертежа
         Dim oSheet As Sheet = drawingDoc.Sheets.Item(1) 'лист чертежа
@@ -613,4 +644,81 @@ Module CommonFunctionsModule
         End Try
     End Function
 
+    ' рассчет BoundingBox детали
+    ' Calculates a tight bounding box around the input body.  An optional
+    ' tolerance argument is available.  This specificies the tolerance in
+    ' centimeters.  If not provided the best existing display mesh is used.
+    Private Function calculateTightBoundingBox(body As SurfaceBody, Optional Tolerance As Double = 0) As Box
+        Try
+            Dim vertCount As Integer
+            Dim facetCount As Integer
+            Dim vertCoords() As Double = {}
+            Dim normVectors() As Double = {}
+            Dim vertInds() As Integer = {}
+
+            Tolerance = 0.1 'конкретное значение для всех деталей, 
+            ' If the tolerance is zero, use the best display mesh available.
+            If Tolerance <= 0 Then
+                ' Get the best display mesh available.
+                Dim tolCount As Long
+                Dim tols() As Double = {}
+                Call body.GetExistingFacetTolerances(tolCount, tols)
+                Dim bestTol As Double
+                bestTol = tols(0)
+                For i As Integer = 1 To tolCount - 1
+                    If tols(i) < bestTol Then
+                        bestTol = tols(i)
+                    End If
+                Next
+
+                body.GetExistingFacets(bestTol, vertCount, facetCount, vertCoords, normVectors, vertInds)
+            Else
+                ' Calculate a new mesh based on the input tolerance.
+                body.CalculateFacets(Tolerance, vertCount, facetCount, vertCoords, normVectors, vertInds)
+            End If
+
+            Dim tg As TransientGeometry = body.Application.TransientGeometry
+
+            ' Calculate the range of the mesh.
+            Dim smallPnt As Point = tg.CreatePoint(vertCoords(0), vertCoords(1), vertCoords(2))
+            Dim largePnt As Point = tg.CreatePoint(vertCoords(0), vertCoords(1), vertCoords(2))
+            For i As Integer = 1 To vertCount - 1
+                Dim vertX As Double = vertCoords(i * 3)
+                Dim vertY As Double = vertCoords(i * 3 + 1)
+                Dim vertZ As Double = vertCoords(i * 3 + 2)
+
+                If vertX < smallPnt.X Then
+                    smallPnt.X = vertX
+                End If
+
+                If vertY < smallPnt.Y Then
+                    smallPnt.Y = vertY
+                End If
+
+                If vertZ < smallPnt.Z Then
+                    smallPnt.Z = vertZ
+                End If
+
+                If vertX > largePnt.X Then
+                    largePnt.X = vertX
+                End If
+
+                If vertY > largePnt.Y Then
+                    largePnt.Y = vertY
+                End If
+
+                If vertZ > largePnt.Z Then
+                    largePnt.Z = vertZ
+                End If
+            Next
+
+            ' Create and return a Box as the result.
+            Dim newBox As Box = tg.CreateBox()
+            newBox.MinPoint = smallPnt
+            newBox.MaxPoint = largePnt
+            Return newBox
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 End Module

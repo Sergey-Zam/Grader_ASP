@@ -26,6 +26,10 @@
 {"id":"P26","name":"Сколько раз применена операция SketchDrivenPattern","weight":"1","tolerance":"0","value":"empty"},
 {"id":"P27","name":"Сколько раз применена операция Sweep","weight":"1","tolerance":"0","value":"empty"},
 {"id":"P28","name":"Сколько раз применена операция Thread (резьба)","weight":"1","tolerance":"0","value":"empty"},
+{"id":"P29","name":"Объем BoundingBox","weight":"1","tolerance":"0.5","value":"empty"},
+{"id":"P30","name":"Площадь BoundingBox","weight":"1","tolerance":"0.5","value":"empty"},
+{"id":"P31","name":"Диагональ BoundingBox","weight":"1","tolerance":"0.5","value":"empty"},
+{"id":"P32","name":"Периметр BoundingBox","weight":"1","tolerance":"0.5","value":"empty"},
 
 {"id":"D1","name":"Имя документа-чертежа","weight":"1","tolerance":"0","value":"empty"},
 {"id":"D2","name":"Выбор формата листа","weight":"1","tolerance":"0","value":"empty"},
