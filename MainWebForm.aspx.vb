@@ -216,10 +216,10 @@ Public Class MainWebForm
 
         tableOfResults.InnerHtml = "" 'очистка таблицы
         'добавление кода будет проводиться к div-у с ID "tableOfResults"
-        tableOfResults.InnerHtml += "<table border=1 bordercolor=black cellspacing=1 cellpadding=4>" 'открывающий тэг таблицы
+        tableOfResults.InnerHtml += "<table border='1' bordercolor='#616161' cellpadding=4 cellspacing=0 style='font: sans-serif;' style='font-weight: normal;'>" 'открывающий тэг таблицы
 
         'add table columns header
-        tableOfResults.InnerHtml += "<thead style='background: #0D47A1; color:  white; font-weight: bold;'>"
+        tableOfResults.InnerHtml += "<thead style='background: #0D47A1; color:  white; font-weight: normal;'>"
         tableOfResults.InnerHtml += "<th>Название критерия</th>"
         tableOfResults.InnerHtml += "<th>Вес критерия</th>"
         tableOfResults.InnerHtml += "<th>Допустимое отклонение, точность (%)</th>"

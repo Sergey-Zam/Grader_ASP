@@ -1,8 +1,8 @@
 ﻿:root {
-    --main-blue: #0288D1;
+    --main-blue: #0277BD;
     --second-blue: #82B1FF;
     --light-gray: #EEEEEE;
-    --dark-gray: #757575;
+    --dark-gray: #616161;
 }
 
 /*классы и идентификаторы*/
@@ -68,7 +68,7 @@ a:hover {
 body {
     width: 100%;
     margin: 0; /* Убираем отступы */
-    background-color: white;
+    background-color: var(--dark-gray);
     font-family: Calibri Light, Calibri, Arial, sans-serif;
     font-size: 12pt;
     text-align: left;
@@ -107,7 +107,6 @@ body {
     text-align: left;
     color: white;
     display: table;
-    background-color: var(--dark-gray);
 }
 
 .instructions_div {
@@ -126,6 +125,7 @@ body {
     float: left;
     overflow-y: auto;
     padding-top: 10px;
+    background-color: white;
 }
 
 .line_div {
@@ -137,7 +137,8 @@ body {
 }
 
 .tableOfResults {
-    overflow-y: scroll;
+    resize: vertical;
+    overflow-y: auto;
     height: 320px;
     background-color: var(--light-gray);
 }
